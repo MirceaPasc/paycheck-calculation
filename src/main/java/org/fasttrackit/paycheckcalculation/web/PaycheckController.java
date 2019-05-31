@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+
 @RestController
 @RequestMapping("/paycheck")
 @CrossOrigin
@@ -59,4 +60,7 @@ public class PaycheckController {
         paycheckService.deletePaycheck(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+
+
 }

@@ -1,7 +1,10 @@
 package org.fasttrackit.paycheckcalculation.transfer;
 
+import javax.validation.constraints.NotNull;
+
 public class GetPaycheckRequest {
 
+    @NotNull
    private String name;
 
     public String getName() {

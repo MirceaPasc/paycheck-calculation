@@ -15,12 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin
 @Service
 public class PaycheckService {
 
@@ -52,27 +50,27 @@ public class PaycheckService {
         return paycheckRepository.findById(id).orElseThrow(Exception::new);
     }
 
-     public Page<PaycheckResponse> getPaychecks(GetPaycheckRequest request, Pageable pageable ) {
-         LOGGER.info("Retrieving paycheck {}", request);
-         Page<Paycheck> paychecks ;
-         paychecks = paycheckRepository.findByName(request.getName(), pageable);
-         List<PaycheckResponse> paycheckResponses = new ArrayList<>();
+       public Page<PaycheckResponse> getPaychecks(GetPaycheckRequest request, Pageable pageable ) {
+           LOGGER.info("Retrieving paycheck {}", request);
+           Page<Paycheck> paychecks ;
+           paychecks = paycheckRepository.findByName(request.getName(), pageable);
+           List<PaycheckResponse> paycheckResponses = new ArrayList<>();
 
-         for (Paycheck paycheck : paychecks.getContent()) {
-             PaycheckResponse paycheckResponse = new PaycheckResponse();
-             paycheckResponse.setId(paycheck.getId());
-             paycheckResponse.setName(paycheck.getName());
-             paycheckResponse.setGrossPay(paycheck.getGrossPay());
-             paycheckResponse.setIncomeTax(paycheck.getIncomeTax());
-             paycheckResponse.setMedicalInsurance(paycheck.getMedicalInsurance());
-             paycheckResponse.setSocialSecurity(paycheck.getSocialSecurity());
-             paycheckResponse.setNetPay(paycheck.getNetPay());
+           for (Paycheck paycheck : paychecks.getContent()) {
+               PaycheckResponse paycheckResponse = new PaycheckResponse();
+               paycheckResponse.setId(paycheck.getId());
+               paycheckResponse.setName(paycheck.getName());
+               paycheckResponse.setGrossPay(paycheck.getGrossPay());
+               paycheckResponse.setIncomeTax(paycheck.getIncomeTax());
+               paycheckResponse.setMedicalInsurance(paycheck.getMedicalInsurance());
+               paycheckResponse.setSocialSecurity(paycheck.getSocialSecurity());
+               paycheckResponse.setNetPay(paycheck.getNetPay());
 
-             paycheckResponses.add(paycheckResponse);
-         }
+               paycheckResponses.add(paycheckResponse);
+           }
 
-         return new PageImpl<>(paycheckResponses, pageable, paychecks.getTotalElements());
-     }
+           return new PageImpl<>(paycheckResponses, pageable, paychecks.getTotalElements());
+       }
 
      public Paycheck updatePaycheck(long id, UpdatePaycheckRequest request) throws Exception {
         LOGGER.info("Updating paycheck {}, {}", id, request);
