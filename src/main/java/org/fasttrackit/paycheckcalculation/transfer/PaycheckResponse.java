@@ -1,5 +1,7 @@
 package org.fasttrackit.paycheckcalculation.transfer;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Objects;
 
 public class PaycheckResponse {
@@ -11,6 +13,7 @@ public class PaycheckResponse {
     private double medicalInsurance;
     private double incomeTax;
     private double netPay;
+    private LocalDate date;
 
     public long getId() {
         return id;
@@ -68,9 +71,17 @@ public class PaycheckResponse {
         this.netPay = netPay;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
-        return "Paycheck{" +
+        return "PaycheckResponse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", grossPay=" + grossPay +
@@ -78,6 +89,7 @@ public class PaycheckResponse {
                 ", medicalInsurance=" + medicalInsurance +
                 ", incomeTax=" + incomeTax +
                 ", netPay=" + netPay +
+                ", date=" + date +
                 '}';
     }
 
@@ -92,11 +104,12 @@ public class PaycheckResponse {
                 Double.compare(that.medicalInsurance, medicalInsurance) == 0 &&
                 Double.compare(that.incomeTax, incomeTax) == 0 &&
                 Double.compare(that.netPay, netPay) == 0 &&
-                Objects.equals(name, that.name);
+                Objects.equals(name, that.name) &&
+                Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, grossPay, socialSecurity, medicalInsurance, incomeTax, netPay);
+        return Objects.hash(id, name, grossPay, socialSecurity, medicalInsurance, incomeTax, netPay, date);
     }
 }

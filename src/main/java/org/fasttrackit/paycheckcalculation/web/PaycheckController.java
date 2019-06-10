@@ -6,7 +6,6 @@ import org.fasttrackit.paycheckcalculation.service.PaycheckService;
 import org.fasttrackit.paycheckcalculation.transfer.CreatePaycheckRequest;
 import org.fasttrackit.paycheckcalculation.transfer.GetPaycheckRequest;
 import org.fasttrackit.paycheckcalculation.transfer.PaycheckResponse;
-import org.fasttrackit.paycheckcalculation.transfer.UpdatePaycheckRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,11 +48,6 @@ public class PaycheckController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Paycheck> updatePaycheck (@PathVariable long id, @RequestBody @Valid UpdatePaycheckRequest request) throws Exception {
-        paycheckService.updatePaycheck(id, request);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletePaycheck(@PathVariable long id) {

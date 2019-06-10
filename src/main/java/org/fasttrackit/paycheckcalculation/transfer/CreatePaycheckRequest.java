@@ -1,12 +1,14 @@
 package org.fasttrackit.paycheckcalculation.transfer;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 public class CreatePaycheckRequest {
 
     @NotBlank
     private String name;
     private double grossPay;
+    private LocalDate date;
 
     public String getName() {
         return name;
@@ -24,12 +26,13 @@ public class CreatePaycheckRequest {
         this.grossPay = grossPay;
     }
 
-    @Override
-    public String toString() {
-        return "CreatePaycheckRequest{" +
-                "name='" + name + '\'' +
-                ", grossPay=" + grossPay +
-                '}';
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
+
 

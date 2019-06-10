@@ -1,8 +1,11 @@
 package org.fasttrackit.paycheckcalculation.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 @Entity
 public class Paycheck {
@@ -19,6 +22,7 @@ public class Paycheck {
     private double medicalInsurance;
     private double incomeTax;
     private double netPay;
+    private LocalDate date;
 
     public long getId() {
         return id;
@@ -76,6 +80,14 @@ public class Paycheck {
         this.netPay = netPay;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Paycheck{" +
@@ -86,6 +98,7 @@ public class Paycheck {
                 ", medicalInsurance=" + medicalInsurance +
                 ", incomeTax=" + incomeTax +
                 ", netPay=" + netPay +
+                ", date=" + date +
                 '}';
     }
 }

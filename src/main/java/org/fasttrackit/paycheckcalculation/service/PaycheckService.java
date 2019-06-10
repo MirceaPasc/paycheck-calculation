@@ -6,10 +6,8 @@ import org.fasttrackit.paycheckcalculation.persistence.PaycheckRepository;
 import org.fasttrackit.paycheckcalculation.transfer.CreatePaycheckRequest;
 import org.fasttrackit.paycheckcalculation.transfer.GetPaycheckRequest;
 import org.fasttrackit.paycheckcalculation.transfer.PaycheckResponse;
-import org.fasttrackit.paycheckcalculation.transfer.UpdatePaycheckRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -51,9 +49,16 @@ public class PaycheckService {
     }
 
        public Page<PaycheckResponse> getPaychecks(GetPaycheckRequest request, Pageable pageable ) {
-           LOGGER.info("Retrieving paycheck {}", request);
+           LOGGER.info("Retrieving paychecks {}", request);
            Page<Paycheck> paychecks ;
-           paychecks = paycheckRepository.findByName(request.getName(), pageable);
+
+           if (request.getName() != null){
+           paychecks = paycheckRepository.findByName(request.getName(), pageable);}
+
+           else {
+               paychecks = paycheckRepository.findAll(pageable);
+           }
+
            List<PaycheckResponse> paycheckResponses = new ArrayList<>();
 
            for (Paycheck paycheck : paychecks.getContent()) {
@@ -65,19 +70,13 @@ public class PaycheckService {
                paycheckResponse.setMedicalInsurance(paycheck.getMedicalInsurance());
                paycheckResponse.setSocialSecurity(paycheck.getSocialSecurity());
                paycheckResponse.setNetPay(paycheck.getNetPay());
+               paycheckResponse.setDate(paycheck.getDate());
 
                paycheckResponses.add(paycheckResponse);
            }
 
            return new PageImpl<>(paycheckResponses, pageable, paychecks.getTotalElements());
        }
-
-     public Paycheck updatePaycheck(long id, UpdatePaycheckRequest request) throws Exception {
-        LOGGER.info("Updating paycheck {}, {}", id, request);
-        Paycheck paycheck = getPaycheck(id);
-        BeanUtils.copyProperties(request,paycheck);
-        return paycheckRepository.save(paycheck);
-    }
 
     public void deletePaycheck(long id) {
         LOGGER.info("Deleting paycheck {}", id);
